@@ -61,14 +61,14 @@ Others: https://www.youtube.com/user/pjreddie/videos
 ### Installing
 - `git clone https://github.com/the3rdchild/Yolo_jetson-nano`
 - `cd Yolo_jetson-nano` you can rename the folder `Yolo_jetson-nano` located in you `Home` with whatever name you want to make it more easy when you access it using terminal: `cd ~/[folder name]`
-- *this step is optional: `wget [link].weights` you can train your own weights or download it using `wget` from internet in case you want another model of weights, there is a model inside `Yolo_jetson-nano` folder name: `yolov7-tiny.weights`
-- `make` I have edited the `Makefile` so it can run perfectly with jetson nano in 800x600 pixel input webcam, but you can change the `Makefile` by following this instructions: 
+- *this step is optional: `wget [link].weights` you can train your own weights or download it using `wget` from internet in case you want another model of weights, there is a model inside `Yolo_jetson-nano` folder, name: `yolov7-tiny.weights`
+- `make` I have edited the `Makefile` so it can run perfectly with jetson nano in 800x600 pixel (change inside `~/src/image_opencv.cpp` line 610 width and line 611 height) input webcam, you can also change the `Makefile` by following this instructions: "How to compile on Linux (using make)"
 
 ## Run YoloV7-tiny
 - example: run with webcam 0 `./Yolo_jetson-nano detector demo cfg/coco.data cfg/yolov7-tiny.cfg yolov7-tiny.weights -c 0`
 
 ## Run with docker
-- example: `sudo docker run --runtime=nvidia --rm -v $PWD:/workspace -w /workspace daisukekobayashi/darknet:gpu darknet detector test data/coco.data yolov7-tiny.cfg yolov7-tiny.weights -i 0 -thresh 0.25 dog.jpg -ext_output` you need to run inside `./Yolo_jetson-nano/build/darknet/x64`, the process will download image of darknet so it can run with docker, but there's no images from daisukekobayashi from jetson nano [arm64] (amd64 only), you need to find from another source.
+- example: `sudo docker run --runtime=nvidia --rm -v $PWD:/workspace -w /workspace daisukekobayashi/darknet:gpu darknet detector test data/coco.data yolov7-tiny.cfg yolov7-tiny.weights -i 0 -thresh 0.25 dog.jpg -ext_output` you need to run inside `./Yolo_jetson-nano/build/darknet/x64`, the process will download image of darknet before, so it can run with docker. the problem there's no images from daisukekobayashi repo for jetson nano [arm64] (daisukekobayashi has amd64 images only), so if you run that command on jetson it will only waste your time by doing nothing, the soluiton is you need to find docker image for darknet from another source.
 ----------------------------------------------------------------------------------
 
 ### How to compile on Linux (using `make`)
