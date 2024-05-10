@@ -549,28 +549,30 @@ extern "C" void release_video_writer(write_cv **output_video_writer)
     }
 }
 
-/*
+//-----------------------------------------------
 extern "C" void *open_video_stream(const char *f, int c, int w, int h, int fps)
 {
-    VideoCapture *cap;
-    if(f) cap = new VideoCapture(f);
-    else cap = new VideoCapture(c);
+    cv::VideoCapture *cap;
+    if(f) cap = new cv::VideoCapture(f);
+    else cap = new cv::VideoCapture(c);
     if(!cap->isOpened()) return 0;
-    if(w) cap->set(CV_CAP_PROP_FRAME_WIDTH, w);
-    if(h) cap->set(CV_CAP_PROP_FRAME_HEIGHT, w);
-    if(fps) cap->set(CV_CAP_PROP_FPS, w);
+    if(w) cap->set(cv::CAP_PROP_FRAME_WIDTH, w);
+    if(h) cap->set(cv::CAP_PROP_FRAME_HEIGHT, h);
+    if(fps) cap->set(cv::CAP_PROP_FPS, fps);
     return (void *) cap;
 }
 
 
 extern "C" image get_image_from_stream(void *p)
 {
-    VideoCapture *cap = (VideoCapture *)p;
-    Mat m;
+    cv::VideoCapture *cap = (cv::VideoCapture *)p;
+    cv::Mat m;
     *cap >> m;
     if(m.empty()) return make_empty_image(0,0,0);
     return mat_to_image(m);
 }
+//-------------------------------------------------
+/*
 
 extern "C" int show_image_cv(image im, const char* name, int ms)
 {
@@ -581,6 +583,7 @@ extern "C" int show_image_cv(image im, const char* name, int ms)
     return c;
 }
 */
+
 
 
 // ====================================================================
@@ -604,8 +607,8 @@ extern "C" cap_cv* get_capture_webcam(int index)
     cv::VideoCapture* cap = NULL;
     try {
         cap = new cv::VideoCapture(index);
-        //cap->set(CV_CAP_PROP_FRAME_WIDTH, 1280);
-        //cap->set(CV_CAP_PROP_FRAME_HEIGHT, 960);
+        cap->set(cv::CAP_PROP_FRAME_WIDTH, 800);
+        cap->set(cv::CAP_PROP_FRAME_HEIGHT, 600);
     }
     catch (...) {
         cerr << " OpenCV exception: Web-camera " << index << " can't be opened! \n";
@@ -1408,7 +1411,7 @@ extern "C" void cv_draw_object(image sized, float *truth_cpu, int max_boxes, int
 
     std::string const window_name = "Marking image";
     cv::namedWindow(window_name, cv::WINDOW_NORMAL);
-    cv::resizeWindow(window_name, 1280, 720);
+    cv::resizeWindow(window_name, 800, 600);
     cv::imshow(window_name, frame);
     cv::moveWindow(window_name, 0, 0);
     cv::setMouseCallback(window_name, callback_mouse_click);
