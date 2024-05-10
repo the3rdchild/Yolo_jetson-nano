@@ -17,9 +17,7 @@ ZED_CAMERA_v2_8=0
 USE_CPP=0
 DEBUG=0
 
-ARCH= -gencode arch=compute_50,code=[sm_50,compute_50] \
-      -gencode arch=compute_52,code=[sm_52,compute_52] \
-	    -gencode arch=compute_61,code=[sm_61,compute_61]
+ARCH= -gencode arch=compute_53,code=[sm_53,compute_53] #Jetson Nano
 
 OS := $(shell uname)
 
