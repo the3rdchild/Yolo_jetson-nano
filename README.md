@@ -85,28 +85,15 @@ Others: https://www.youtube.com/user/pjreddie/videos
 - German/Belgium/Russian/LISA/MASTIF Traffic Sign Datasets for Detection - use this parser: https://github.com/angeligareta/Datasets2Darknet#detection-task
 - List of other datasets: https://github.com/AlexeyAB/darknet/tree/master/scripts#datasets
 
-### How to compile on Linux/macOS (using `CMake`)
-
-The `CMakeLists.txt` will attempt to find installed optional dependencies like CUDA, cudnn, ZED and build against those. It will also create a shared object library file to use `darknet` for code development.
-
-To update CMake on Ubuntu, it's better to follow guide here: https://apt.kitware.com/ or https://cmake.org/download/
-
-```bash
-git clone https://github.com/AlexeyAB/darknet
-cd darknet
-mkdir build_release
-cd build_release
-cmake ..
-cmake --build . --target install --parallel 8
-```
-
-### How to install on Linux (ubuntu jetson nano)
-# Set cuda path
+# How to install on Linux (ubuntu jetson nano)
+### Set cuda path
 - `export PATH=/usr/local/cuda-10.0/bin${PATH:+:${PATH}}`
 - `export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}`
-- `git clone https://github.com/the3rdchild/darknet_jetson-nano`
-- `cd darknet_jetson-nano` you can rename the folder `darknet_jetson-nano` located in you `Home` with whatever name you want to make it more easy when you access it using terminal: `cd ~/[folder name]`
-- *this step is optional: `wget [link].weights` you can train your own weights or download it using `wget` from internet in case you want another model of weights, there is a model inside `darknet_jetson-nano` folder name: `yolov7-tiny.weights`
+### Installing
+- `git clone https://github.com/the3rdchild/Yolo_jetson-nano`
+- `cd Yolo_jetson-nano` you can rename the folder `Yolo_jetson-nano` located in you `Home` with whatever name you want to make it more easy when you access it using terminal: `cd ~/[folder name]`
+- *this step is optional: `wget [link].weights` you can train your own weights or download it using `wget` from internet in case you want another model of weights, there is a model inside `Yolo_jetson-nano` folder name: `yolov7-tiny.weights`
+- `make` I have edited the `Makefile` so it can run perfectly with jetson nano in 800x600 pixel input webcam, but you can change the `Makefile` by following this instructions: 
 
 ### How to compile on Linux (using `make`)
 
@@ -124,7 +111,7 @@ Before make, you can set such options in the `Makefile`: [link](https://github.c
 - `ZED_CAMERA=1` to build a library with ZED-3D-camera support (should be ZED SDK installed), then run
     `LD_LIBRARY_PATH=./:$LD_LIBRARY_PATH ./uselib data/coco.names cfg/yolov4.cfg yolov4.weights zed_camera`
 - You also need to specify for which graphics card the code is generated. This is done by setting `ARCH=`. If you use a newer version than CUDA 11 you further need to edit line 20 from Makefile and remove `-gencode arch=compute_30,code=sm_30 \` as Kepler GPU support was dropped in CUDA 11. You can also drop the general `ARCH=` and just uncomment `ARCH=` for your graphics card.
-# if you encounter error during `make` compiling: something about nvcc: you can try this `export PATH=/usr/local/cuda/bin:$PATH` and do the `make` again
+### if you encounter error during `make` compiling: something about nvcc: you can try this `export PATH=/usr/local/cuda/bin:$PATH` and do the `make` again
 
 ### How to compile on Windows (using `CMake`)
 
