@@ -1,37 +1,5 @@
 # Yolo v7, v5, v4, v3 and v2 for Windows and Linux
 
-* Read the FAQ:  https://www.ccoderun.ca/programming/darknet_faq/
-* Join the Darknet/YOLO Discord:  https://discord.gg/zSq8rtW
-* Recommended GitHub repo for Darknet/YOLO:  https://github.com/hank-ai/darknetcv/
-* Hank.ai and Darknet/YOLO:  https://hank.ai/darknet-welcomes-hank-ai-as-official-sponsor-and-commercial-entity/
-
-## (neural networks for object detection)
-
-* Paper **YOLOv7**: https://arxiv.org/abs/2207.02696
-
-* source code YOLOv7 - Pytorch (use to reproduce results): https://github.com/WongKinYiu/yolov7
-
-----
-
-* Paper **YOLOv4**: https://arxiv.org/abs/2004.10934
-
-* source code YOLOv4 - Darknet (use to reproduce results): https://github.com/AlexeyAB/darknet
-
-----
-
-* Paper **Scaled-YOLOv4 (CVPR 2021)**: https://openaccess.thecvf.com/content/CVPR2021/html/Wang_Scaled-YOLOv4_Scaling_Cross_Stage_Partial_Network_CVPR_2021_paper.html
-
-* source code Scaled-YOLOv4 - Pytorch (use to reproduce results): https://github.com/WongKinYiu/ScaledYOLOv4
-
-----
-
-### YOLOv7: Trainable bag-of-freebies sets new state-of-the-art for real-time object detectors
-
-* **Paper**: https://arxiv.org/abs/2207.02696
-
-* **source code - Pytorch (use to reproduce results):** https://github.com/WongKinYiu/yolov7
-
-
 YOLOv7 is more accurate and faster than YOLOv5 by **120%** FPS, than YOLOX by **180%** FPS, than Dual-Swin-T by **1200%** FPS, than ConvNext by **550%** FPS, than SWIN-L by **500%** FPS, than PPYOLOE-X by **150%** FPS.
 
 YOLOv7 surpasses all known object detectors in both speed and accuracy in the range from 5 FPS to 160 FPS and has the highest accuracy 56.8% AP among all known real-time object detectors with 30 FPS or higher on GPU V100, batch=1. 
@@ -85,6 +53,7 @@ Others: https://www.youtube.com/user/pjreddie/videos
 - German/Belgium/Russian/LISA/MASTIF Traffic Sign Datasets for Detection - use this parser: https://github.com/angeligareta/Datasets2Darknet#detection-task
 - List of other datasets: https://github.com/AlexeyAB/darknet/tree/master/scripts#datasets
 
+----------------------------------------------------------------------------------
 # How to install on Linux (ubuntu jetson nano)
 ### Set cuda path
 - `export PATH=/usr/local/cuda-10.0/bin${PATH:+:${PATH}}`
@@ -94,6 +63,13 @@ Others: https://www.youtube.com/user/pjreddie/videos
 - `cd Yolo_jetson-nano` you can rename the folder `Yolo_jetson-nano` located in you `Home` with whatever name you want to make it more easy when you access it using terminal: `cd ~/[folder name]`
 - *this step is optional: `wget [link].weights` you can train your own weights or download it using `wget` from internet in case you want another model of weights, there is a model inside `Yolo_jetson-nano` folder name: `yolov7-tiny.weights`
 - `make` I have edited the `Makefile` so it can run perfectly with jetson nano in 800x600 pixel input webcam, but you can change the `Makefile` by following this instructions: 
+
+## Run YoloV7
+- example: run with webcam 0 `./darknet_jetson-nano detector demo cfg/coco.data cfg/yolov7-tiny.cfg yolov7-tiny.weights -c 0`
+
+## Run with docker
+- example: `sudo docker run --runtime=nvidia --rm -v $PWD:/workspace -w /workspace daisukekobayashi/darknet:gpu darknet detector test data/coco.data yolov7-tiny.cfg yolov7-tiny.weights -i 0 -thresh 0.25 dog.jpg -ext_output` you need to run inside `./darknet_jetson-nano/build/darknet/x64`, the process will download image of darknet so it can run with docker, but there's no images from daisukekobayashi from jetson nano [arm64] (amd64 only), you need to find from another source.
+----------------------------------------------------------------------------------
 
 ### How to compile on Linux (using `make`)
 
